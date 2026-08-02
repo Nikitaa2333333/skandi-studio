@@ -29,7 +29,6 @@ const items = [
         <figure
           class:list={['bp-card', { 'bp-card--first reveal': i < 2 }]}
           style={`grid-column: ${it.start} / span ${it.span};`}
-          data-label={it.label}
         >
           <img src={asset(it.src)} alt="" loading="eager" decoding="async" />
         </figure>

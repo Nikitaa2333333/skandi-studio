@@ -1,20 +1,21 @@
 ---
+// Липкая шапка без фона — секции проезжают под ней.
+// Пункты меню подставить свои.
 const nav = [
-  { href: '#work', label: 'Подход' },
-  { href: '#methods', label: 'Каталог' },
-  { href: '#articles', label: 'Статьи' },
-  { href: '#about', label: 'О студии' },
-  { href: '#contacts', label: 'Контакты' },
+  { href: '#', label: 'Раздел' },
+  { href: '#', label: 'Раздел' },
+  { href: '#', label: 'Раздел' },
+  { href: '#', label: 'Раздел' },
 ];
 ---
 
 <header class="header">
   <div class="container header__row">
-    <a href={import.meta.env.BASE_URL} class="header__logo">Skandi Studio</a>
+    <a href={import.meta.env.BASE_URL} class="header__logo">Логотип</a>
     <nav class="header__nav">
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
-    <a href="#booking" class="header__cta">Обсудить проект</a>
+    <a href="#form" class="header__cta">Кнопка</a>
   </div>
 </header>
 

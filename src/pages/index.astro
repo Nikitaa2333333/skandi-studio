@@ -5,592 +5,266 @@ import Gallery from '../components/Gallery.astro';
 import Footer from '../components/Footer.astro';
 import { asset } from '../lib/asset';
 
-// Контент — рыба под тему «студия скандинавского дизайна и мебели».
-// Композиция и все приёмы — из dr.chashchina, менять тексты, не сетку.
+// ВИТРИНА ЭЛЕМЕНТОВ, не сайт. Каждый блок показан один раз с рыбой
+// вместо контента, чтобы было видно поведение, а не смысл.
+// Структуру страницы собираешь сам: копируешь нужный блок отсюда,
+// стили уже глобальные (src/styles/blocks.css).
 
-const steps = [
-  {
-    title: 'Разобраться',
-    text: 'Сначала нужно понять, как вы живёте. Кто готовит и как часто, где копятся вещи, куда падает свет по утрам. От этого напрямую зависит, какая мебель нужна, а какая будет просто занимать место. Иногда достаточно разговора, иногда мы приезжаем на обмер.',
-  },
-  {
-    title: 'Собрать основу',
-    text: 'Планировка, крупная мебель, сценарии света. Основа делает квартиру удобной ещё до того, как в ней появится хоть одна декоративная вещь.',
-  },
-  {
-    title: 'Наполнить деталями',
-    text: 'И только когда основа собрана, есть смысл переходить к текстилю, керамике и декору. В обратном порядке получается склад красивых вещей, а не дом.',
-  },
-];
-
-const values = [
-  { t: 'Честные материалы', d: 'Массив дерева, шерсть, лён, камень. То, что стареет красиво, а не выходит из строя.' },
-  { t: 'Предсказуемый бюджет', d: 'Смета фиксируется до старта, а не растёт по ходу. Вы знаете, что и сколько стоит, до первой покупки.' },
-  { t: 'Ваше участие', d: 'Дом собирается под ваш быт, а не под картинку из каталога. Это не дополнение к проекту, это его условие.' },
-];
-
-const catalog = [
-  {
-    t: 'Мебель из массива',
-    d: 'Столы, стулья, кровати и фасады из дуба и ясеня. Простые формы, которые не надоедают и переживают переезды.',
-  },
-  {
-    t: 'Системы хранения',
-    d: 'Шкафы и стеллажи под ваши вещи, а не «вообще». Хаос исчезает, когда у каждой вещи есть своё место.',
-  },
-  {
-    t: 'Свет',
-    d: 'Тёплые сценарии вместо одной люстры: рабочий, вечерний, ночной. Свет делает уют больше, чем любая покупка.',
-  },
-  {
-    t: 'Текстиль и декор',
-    d: 'Шерсть, лён и керамика ручной работы. Последний слой, который превращает собранную квартиру в живой дом.',
-  },
-];
-
-const services = [
-  {
-    t: 'Подбор из коллекций',
-    d: 'Соберём комплект из готовых позиций шоурума под вашу планировку и бюджет. Быстро и без ремонта.',
-  },
-  {
-    t: 'Мебель по вашим размерам',
-    d: 'Когда типовое не встаёт: ниши, эркеры, нестандартная высота. Делаем на своём производстве, сроки называем честно.',
-  },
-  {
-    t: 'Комплектация под ключ',
-    d: 'От планировки до расстановки: мебель, свет, текстиль. Вы въезжаете в готовый дом, а не в список коробок.',
-  },
-  {
-    t: 'Доставка и сборка',
-    d: 'Привозим, собираем, увозим упаковку. Дом остаётся домом, а не стройплощадкой.',
-  },
-];
-
-const zones = ['Прихожая', 'Кухня-гостиная', 'Спальня'];
-
-const homecare = [
-  'Уход за деревом: масло вместо лака',
-  'Текстиль: как стирать шерсть и лён',
-  'Что докупать сезонно, а что — никогда',
-];
-
-const press = [
-  { src: 'AD', t: 'Сканди без клише: как не превратить дом в шоурум' },
-  { src: 'Elle Decoration', t: 'Пять ошибок при покупке мебели из массива' },
-  { src: 'INMYROOM', t: 'Свет в маленькой квартире: три сценария' },
-  { src: 'The Blueprint', t: 'Почему лагом пережил все тренды' },
-  { src: 'Дом.РФ Журнал', t: 'Хранение без хаоса: с чего начать' },
-  { src: 'Афиша Daily', t: 'Гид по скандинавским брендам в России' },
-];
-
-const rubrics = [
-  'Материалы и износ',
-  'Свет в квартире',
-  'Хранение без хаоса',
-  'Сканди-классика и подделки',
-  'Уход за мебелью',
-  'Маленькие квартиры',
-];
-
-const symptoms = [
-  'Ремонт закончился, а квартира так и не стала домом.',
-  'Мебель покупалась по случаю, и теперь ничего ни с чем не дружит.',
-  'Вещи копятся, а хранить их негде — хотя шкафов вроде хватает.',
-  'Вечером дома неуютно: свет либо больничный, либо его нет.',
-  'Хочется скандинавский интерьер, но страшно получить каталог IKEA.',
-  'Нравятся картинки в Pinterest, но непонятно, как это перенести в свою планировку.',
-];
-
-const path = [
-  { y: '2012', t: 'Первые поездки на фабрики Дании и Швеции, начало прямых поставок' },
-  { y: '2014', t: 'Открытие шоурума в Москве' },
-  { y: '2016', t: 'Собственное производство мебели из массива в Подмосковье' },
-  { y: '2019', t: 'Первая собственная коллекция — стол и стулья Norr' },
-  { y: '2021', t: 'Комплектация квартир под ключ как отдельное направление' },
-  { y: '2023', t: 'Вторая площадка производства, доставка по всей России' },
-  { y: 'Сегодня', t: 'Шоурум, производство и студия комплектации под одной крышей' },
-];
+const lorem =
+  'Наборный абзац — мера строки задана токеном на самом элементе, ' +
+  'поэтому строка не уезжает за комфортные 68–78 знаков даже на широком экране.';
+const short = 'Короткое описание карточки на пару строк.';
 ---
 
-<Layout
-  title="Skandi Studio — скандинавская мебель и интерьеры"
-  description="Мебель из массива, свет и текстиль. Собираем дом под ваш быт: от подбора из коллекций до комплектации под ключ."
->
+<Layout title="Дизайн-кит — витрина элементов" description="Набор блоков и токенов дизайн-системы.">
   <Header />
 
-  <!-- ============ 1. Первый экран ============
-       Слева текст (прижат к низу кадра), справа видео-футаж; снизу
-       видео — белый градиент, чтобы не было жёсткой границы с галереей. -->
-  <section class="section section--flush-top section--flush-bottom hero">
+  <!-- HERO: текст + медиа, градиент вниз. Для портрета-вырезки
+       добавить .hero__photo--cutout, для видео — оставить как есть. -->
+  <section class="section section--flush-top section--flush-bottom">
     <div class="container hero__grid">
       <div class="hero__text">
-        <p class="tag reveal">Скандинавская мебель и интерьеры · шоурум в Москве</p>
-        <h1 class="display" data-split>Skandi Studio</h1>
+        <p class="tag reveal">Бирка · мелкий технический лейбл</p>
+        <h1 class="display" data-split>Заголовок</h1>
         <p class="hero__role reveal" style="--reveal-delay:.12s">
-          Мебель из массива, свет и текстиль. 12 лет практики.
+          Подзаголовок под именем — заголовочный уровень, не микролейбл.
         </p>
         <p class="lead reveal" style="--reveal-delay:.18s">
-          Красивая картинка сама по себе не решает ничего. Решает то,
-          насколько точно дом собран под ваш быт — привычки, хранение,
-          свет и утро понедельника.
+          Лид первого экрана: 56–64 знака в строке, вес 380, чуть крупнее набора.
         </p>
         <div class="hero__cta reveal" style="--reveal-delay:.24s">
-          <a href="#booking" class="btn">Обсудить проект</a>
-          <p class="small hero__note">Первая консультация — бесплатно</p>
+          <a href="#form" class="btn">Кнопка</a>
+          <p class="small hero__note">Подпись под кнопкой</p>
         </div>
       </div>
-
       <figure class="hero__photo">
-        <video
-          src={asset('video/ripple.mp4')}
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          aria-hidden="true"
-        ></video>
+        <video src={asset('video/ripple.mp4')} autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
       </figure>
     </div>
   </section>
 
-  <!-- ============ Галерея (приём из prmpt: скейл карточек от скролла) ============ -->
+  <!-- ГАЛЕРЕЯ: рассыпанная сетка, карточки растут от позиции скролла -->
   <Gallery />
 
-  <!-- ============ 2. С чем приходят ============ -->
-  <section class="section" id="work">
+  <!-- ТИПОГРАФИКА И ЦВЕТ -->
+  <section class="section">
     <div class="container">
-      <p class="tag reveal">С чем приходят</p>
-      <h2 data-split>Возможно, вам это знакомо</h2>
-      <ul class="cards reveal-group">
-        {symptoms.map((text, i) => (
-          <li class="cards__item">
-            <span class="tag cards__num">{String(i + 1).padStart(2, '0')}</span>
-            <p>{text}</p>
-          </li>
-        ))}
-      </ul>
-      <p class="reveal">
-        Если узнали себя <mark>хотя бы в одном пункте</mark> — дальше о том,
-        как мы с этим работаем.
-      </p>
+      <p class="tag reveal">Витрина</p>
+      <h2 data-split>Типографика</h2>
+      <div class="spec reveal-group">
+        <div class="spec__row"><span class="tag">01</span><h3>display</h3><p>Первый экран, вес 300, межстрочный 0.9</p></div>
+        <div class="spec__row"><span class="tag">02</span><h3>h1 / h2 / h3</h3><p>Заголовки: вес 330, отрицательный трекинг, капс запрещён</p></div>
+        <div class="spec__row"><span class="tag">03</span><h3>lead</h3><p>Лид: крупнее набора, вес 380, мера 60ch</p></div>
+        <div class="spec__row"><span class="tag">04</span><h3>body / small / tag</h3><p>Набор, техподпись, микролейбл — жирность и курсив внутри запрещены</p></div>
+      </div>
+
+      <p class="tag spec__sub reveal">Цвет</p>
+      <div class="triple reveal-group">
+        <div><h3>Зелёный авокадо</h3><p>Акцент: ссылки, бирки, номера, детали. Токен --c-green.</p></div>
+        <div><h3>Глубокий лесной</h3><p>Тёмные контрастные секции. Токен --c-green-deep, класс .theme-dark.</p></div>
+        <div><h3>Шалфей</h3><p>Маркер, выделение, подложка широкой карточки. Токен --c-green-pale.</p></div>
+      </div>
+      <p class="reveal">Выделение фразы — только <mark>фирменным маркером</mark>, не жирностью.</p>
     </div>
   </section>
 
-  <!-- ============ 3. Работа с двух сторон ============
-       Общий заголовок + контрастный сплит: светлая и шалфейная половины -->
-  <section id="halves">
+  <!-- КАРТОЧКИ С НОМЕРАМИ -->
+  <section class="section section--surface">
+    <div class="container">
+      <p class="tag reveal">.cards</p>
+      <h2 data-split>Карточки с номерами</h2>
+      <ul class="cards reveal-group">
+        {[1, 2, 3, 4, 5, 6].map((n) => (
+          <li class="cards__item">
+            <span class="tag cards__num">{String(n).padStart(2, '0')}</span>
+            <p>Текст карточки читается крупно, как лид — это смысловой центр секции.</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- КОНТРАСТНЫЙ СПЛИТ: половина светлая, половина с видео под вуалью -->
+  <section>
     <div class="container halves-head">
-      <p class="tag reveal">Из чего складывается дом</p>
-      <h2 data-split>Работа идёт с&nbsp;двух сторон</h2>
-      <p class="lead reveal">
-        Мебель — только половина дела. Вторая половина — то, как
-        устроен ваш быт: от&nbsp;него зависит, станет&nbsp;ли красивая
-        квартира удобным домом.
-      </p>
+      <p class="tag reveal">.halves-split</p>
+      <h2 data-split>Контрастный сплит</h2>
+      <p class="lead reveal">Две половины во всю ширину экрана: одна на сером, вторая с футажом под шалфейной вуалью.</p>
     </div>
     <div class="halves-split">
       <div class="halves-split__col halves-split__col--light">
         <div class="halves-split__inner">
           <p class="tag reveal">01</p>
-          <h3 class="halves-split__title" data-split>Форма</h3>
-          <p class="reveal">
-            Дерево, свет, текстиль, пропорции. Всё, что видно глазу
-            и приятно руке — с честными материалами и простыми линиями,
-            которые не надоедают через сезон.
-          </p>
+          <h3 class="halves-split__title" data-split>Половина</h3>
+          <p class="reveal">{lorem}</p>
         </div>
       </div>
       <div class="halves-split__col halves-split__col--sage">
-        <video
-          class="halves-split__video"
-          src={asset('video/serum.mp4')}
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          aria-hidden="true"
-        ></video>
+        <video class="halves-split__video" src={asset('video/serum.mp4')} autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <div class="halves-split__inner">
           <p class="tag reveal">02</p>
-          <h3 class="halves-split__title" data-split>Функция</h3>
-          <p class="reveal">
-            Хранение, сценарии света, маршруты по квартире, уборка.
-            Всё, из-за чего интерьер живёт или раздражает — и что
-            не исправить ни одной красивой вещью.
-          </p>
+          <h3 class="halves-split__title" data-split>Вторая</h3>
+          <p class="reveal">{lorem}</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Тёмная контрастная секция (реф: hero croptab на глубоком олива) -->
+  <!-- ТЁМНАЯ СЕКЦИЯ: две колонки + линия + лид -->
   <section class="section theme-dark">
     <div class="container">
-      <p class="tag reveal">Два слова, на которых стоит сканди</p>
+      <p class="tag reveal">.theme-dark + .mechanisms</p>
       <div class="mechanisms reveal-group">
-        <div class="mechanisms__item">
-          <h3>Лагом</h3>
-          <p>
-            «Ровно столько, сколько нужно». Не минимализм ради пустоты,
-            а точная мера: вещей достаточно, лишнего нет, каждая работает.
-          </p>
-        </div>
-        <div class="mechanisms__item">
-          <h3>Хюгге</h3>
-          <p>
-            Уют как ежедневная практика, а не событие. Тёплый свет, честные
-            материалы и место, где вечером хочется остаться дома.
-          </p>
-        </div>
+        <div class="mechanisms__item"><h3>Колонка</h3><p>{lorem}</p></div>
+        <div class="mechanisms__item"><h3>Колонка</h3><p>{lorem}</p></div>
       </div>
       <hr class="rule mechanisms__rule" />
-      <p class="lead reveal">
-        Дом — самая большая вещь, которой вы пользуетесь каждый день.
-        Собирая его, мы работаем не с отдельным стулом, а с тем, как
-        устроена ваша жизнь целиком.
-      </p>
+      <p class="lead reveal">Лид на тёмном: текст чисто белый, приглушение запрещено.</p>
     </div>
   </section>
 
-  <!-- ============ 4. Как строится работа ============ -->
-  <section class="section" id="steps">
-    <div class="container">
-      <p class="tag reveal">Как строится работа</p>
-      <h2 data-split>Почему мы не начинаем с декора</h2>
-      <div class="spec reveal-group">
-        {steps.map((s, i) => (
-          <div class="spec__row">
-            <span class="tag">0{i + 1}</span>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </div>
-        ))}
-      </div>
-      <p class="tag spec__sub reveal">Что для нас важно</p>
-      <div class="triple reveal-group">
-        {values.map((v) => (
-          <div>
-            <h3>{v.t}</h3>
-            <p>{v.d}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Фото-пауза: во всю ширину экрана -->
+  <!-- ФОТО-ПАУЗА -->
   <figure class="strip">
-    <img src={asset('photos/web/strip1.webp')} alt="Интерьер Skandi Studio" loading="lazy" decoding="async" />
+    <img src={asset('photos/web/strip1.webp')} alt="" loading="lazy" decoding="async" />
     <figcaption class="strip__cap">
-      <span>
-        Мебель работает, когда понятен быт. Семьи живут по-разному,
-        и то, что собрало дом друзьям, вам может просто не подойти.
-      </span>
-      <span>
-        Поэтому проект начинается с разговора о том, как вы живёте,
-        а не с каталога. Иногда — с обмера: часть решений видна только
-        на месте.
-      </span>
+      <span>Фраза слева на градиенте — кадр во всю ширину, без кропа.</span>
+      <span>Фраза справа. Мера каждой — 30 знаков.</span>
     </figcaption>
   </figure>
 
-  <!-- ============ 5. Каталог ============ -->
-  <section class="section section--surface" id="methods">
+  <!-- КАРТОЧКИ-ПАСПОРТА + БЕНТО -->
+  <section class="section section--surface">
     <div class="container">
-      <p class="tag reveal">Каталог</p>
-      <h2 data-split>Из чего собирается дом</h2>
-      <p class="lead reveal">
-        Ниже — не список товаров, а объяснение того, что каждое
-        направление даёт дому. Конкретные позиции имеет смысл обсуждать
-        уже на встрече, когда понятна задача.
-      </p>
+      <p class="tag reveal">.passport--bento</p>
+      <h2 data-split>Бенто с широкой карточкой</h2>
       <div class="passport passport--bento reveal-group">
-        {catalog.map((h, i) => (
-          i === 3 ? (
-            <div class="passport__card passport__card--feature">
-              <div class="passport__feature-text">
-                <span class="tag">0{i + 1}</span>
-                <div class="passport__body">
-                  <h3>{h.t}</h3>
-                  <p class="passport__desc">{h.d}</p>
-                </div>
-              </div>
-              <video
-                class="passport__video"
-                src={asset('video/ripple.mp4')}
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="metadata"
-                aria-hidden="true"
-              ></video>
-            </div>
-          ) : (
-            <div class="passport__card">
-              <span class="tag">0{i + 1}</span>
-              <div class="passport__body">
-                <h3>{h.t}</h3>
-                <p class="passport__desc">{h.d}</p>
-              </div>
-            </div>
-          )
-        ))}
-      </div>
-      <div class="quit reveal">
-        <h3>Чего мы не делаем</h3>
-        <p>
-          Мода на интерьеры меняется быстро, и часть решений, популярных
-          пять лет назад, сегодня выглядит устаревшей или просто неудобна
-          в быту. Мы о них говорим честно — в том числе о тех, что нам
-          самим когда-то нравились.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 6. Планировка ============ -->
-  <section class="section" id="planning">
-    <div class="container split">
-      <div>
-        <p class="tag reveal">Планировка</p>
-        <h2 data-split>С чего начинается дом</h2>
-        <p class="reveal">
-          Неуютной квартиру делает не мебель, а то, как она расставлена —
-          маршруты, свет, мёртвые углы. Поэтому новые покупки почти
-          не спасают: они работают выше, а проблема глубже.
-        </p>
-      </div>
-      <figure class="split__photo reveal">
-        <img src={asset('photos/web/09.webp')} alt="Планировка и расстановка" loading="lazy" decoding="async" />
-      </figure>
-    </div>
-  </section>
-
-  <!-- ============ 7. Услуги ============ -->
-  <section class="section section--surface" id="services">
-    <div class="container">
-      <p class="tag reveal">Услуги</p>
-      <h2 data-split>Как можно с нами работать</h2>
-      <p class="lead reveal">
-        Говорим не о товарах, а о задачах. Состав работы подбирается
-        под задачу, а не наоборот.
-      </p>
-      <div class="passport reveal-group">
-        {services.map((t, i) => (
+        {[1, 2, 3].map((n) => (
           <div class="passport__card">
-            <span class="tag">0{i + 1}</span>
-            <div class="passport__body">
-              <h3>{t.t}</h3>
-              <p class="passport__desc">{t.d}</p>
-            </div>
+            <span class="tag">0{n}</span>
+            <div class="passport__body"><h3>Заголовок</h3><p class="passport__desc">{short}</p></div>
+          </div>
+        ))}
+        <div class="passport__card passport__card--feature">
+          <div class="passport__feature-text">
+            <span class="tag">04</span>
+            <div class="passport__body"><h3>Широкая карточка</h3><p class="passport__desc">{short}</p></div>
+          </div>
+          <video class="passport__video" src={asset('video/ripple.mp4')} autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+        </div>
+      </div>
+      <div class="quit reveal"><h3>Замыкающий блок</h3><p>{lorem}</p></div>
+    </div>
+  </section>
+
+  <!-- РОВНАЯ СЕТКА ПАСПОРТОВ 4×N -->
+  <section class="section">
+    <div class="container">
+      <p class="tag reveal">.passport</p>
+      <h2 data-split>Ровная сетка карточек</h2>
+      <div class="passport reveal-group">
+        {[1, 2, 3, 4].map((n) => (
+          <div class="passport__card">
+            <span class="tag">0{n}</span>
+            <div class="passport__body"><h3>Заголовок</h3><p class="passport__desc">{short}</p></div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ============ 8. Зоны, которые решают ============ -->
-  <section class="section" id="zones">
-    <div class="container">
-      <p class="tag reveal">Зоны, которые решают</p>
-      <h2 data-split>Дом встречает прихожей</h2>
-      <p class="lead reveal">
-        Ощущение дома складывается не в гостиной с дивана. Первыми его
-        создают прихожая, кухня и спальня — и именно им обычно достаётся
-        меньше всего внимания.
-      </p>
-      <ul class="zones reveal-group">
-        {zones.map((z) => (
-          <li>
-            <h3>{z}</h3>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <!-- ============ 9. Манифест ============ -->
-  <section class="section theme-dark" id="inside">
-    <div class="container">
-      <p class="tag reveal">Про главное</p>
-      <p class="manifesto reveal">
-        Уют начинается <mark>не с покупки</mark>
-      </p>
-      <div class="manifesto__cols reveal-group">
-        <p>
-          Дом во многом определяется тем, как устроен быт. Хранение,
-          сценарии света, маршруты по квартире, привычки семьи — всё это
-          отражается на ощущении от интерьера раньше, чем мы связываем
-          одно с другим.
-        </p>
-        <p>
-          Мы не верим в одну вещь, которая решит все проблемы. Живой
-          дом — это всегда результат комплексной работы: планировки,
-          света, честных материалов и внимания к тому, как вы живёте
-          на самом деле.
-        </p>
-      </div>
-      <a class="link-arrow reveal" href="#articles">Читать статьи →</a>
-    </div>
-  </section>
-
-  <!-- ============ 10. Уход за домом ============ -->
-  <section class="section" id="homecare">
-    <div class="container split split--reverse">
-      <figure class="split__photo reveal">
-        <img src={asset('photos/web/07.webp')} alt="Уход за мебелью" loading="lazy" decoding="async" />
-      </figure>
+  <!-- СПЛИТ ТЕКСТ + ФОТО (есть --reverse) -->
+  <section class="section section--surface">
+    <div class="container split">
       <div>
-        <p class="tag reveal">Уход за домом</p>
-        <h2 data-split>Чтобы служило десятилетиями</h2>
-        <p class="reveal">
-          Мебель из массива живёт дольше владельца, если за ней правильно
-          ухаживать. Но вокруг ухода столько маркетинга, что разобраться
-          самостоятельно почти невозможно.
-        </p>
+        <p class="tag reveal">.split</p>
+        <h2 data-split>Текст и фото</h2>
+        <p class="reveal">{lorem}</p>
         <ul class="list-plain reveal-group">
-          {homecare.map((h) => (
-            <li>
-              <h3>{h}</h3>
-            </li>
-          ))}
+          <li><h3>Пункт перечисления</h3></li>
+          <li><h3>Без буллитов и линий</h3></li>
+          <li><h3>Ритм держат отступы</h3></li>
         </ul>
       </div>
+      <figure class="split__photo reveal">
+        <img src={asset('photos/web/09.webp')} alt="" loading="lazy" decoding="async" />
+      </figure>
     </div>
   </section>
 
-  <!-- ============ 11. Соцсети и СМИ ============ -->
-  <section class="section section--surface" id="press">
+  <!-- МАНИФЕСТ НА ТЁМНОМ -->
+  <section class="section theme-dark">
     <div class="container">
-      <p class="tag reveal">Публикации в СМИ</p>
-      <h2 data-split>Нас спрашивают</h2>
-      <p class="lead reveal">
-        За годы работы нас приглашали комментировать AD, Elle Decoration,
-        INMYROOM, The Blueprint и другие издания. Здесь собрано главное.
-      </p>
+      <p class="tag reveal">.manifesto</p>
+      <p class="manifesto reveal">Крупная фраза <mark>с маркером</mark></p>
+      <div class="manifesto__cols reveal-group">
+        <p>{lorem}</p>
+        <p>{lorem}</p>
+      </div>
+      <a class="link-arrow reveal" href="#form">Ссылка-стрелка →</a>
+    </div>
+  </section>
+
+  <!-- EDITORIAL-СТРОКИ + ТЕКСТ СО ССЫЛКАМИ -->
+  <section class="section">
+    <div class="container">
+      <p class="tag reveal">.pressrows</p>
+      <h2 data-split>Строки списка</h2>
       <div class="pressrows reveal-group">
-        {press.map((p) => (
+        {['Источник', 'Источник', 'Источник', 'Источник'].map((s) => (
           <div class="pressrows__row">
-            <span class="tag">{p.src}</span>
-            <h3>{p.t}</h3>
+            <span class="tag">{s}</span>
+            <h3>Заголовок строки — при наведении уезжает вправо</h3>
             <span class="pressrows__arrow" aria-hidden="true">→</span>
           </div>
         ))}
       </div>
       <div class="socials reveal">
-        <p>
-          Если пока не готовы к проекту — подписывайтесь. Разбираем то,
-          о чём чаще всего спрашивают в шоуруме: материалы, свет, хранение
-          и мифы вокруг сканди.
-        </p>
-        <nav class="socials__links">
-          <a href="#">Telegram</a>
-          <a href="#">ВКонтакте</a>
-        </nav>
+        <p>{lorem}</p>
+        <nav class="socials__links"><a href="#">Ссылка</a><a href="#">Ссылка</a></nav>
       </div>
     </div>
   </section>
 
-  <!-- ============ 12. О студии ============ -->
-  <section class="section" id="about">
+  <!-- ТАЙМЛАЙН + СЕТКА «НОМЕР + ЗАГОЛОВОК» -->
+  <section class="section section--surface">
     <div class="container">
-      <p class="tag reveal">О студии</p>
-      <h2 data-split>Ради чего всё это</h2>
-      <p class="lead reveal">
-        Квартиру можно обставить и за неделю — вопрос в том, каким этот
-        дом будет через десять лет и захочется ли в него возвращаться.
-        <mark>Ради этого всё и делается.</mark>
-      </p>
+      <p class="tag reveal">.path / .rubrics</p>
+      <h2 data-split>Таймлайн и рубрики</h2>
       <div class="path reveal">
         <div class="path__head">
-          <h3>Наш путь</h3>
+          <h3>Лента</h3>
           <span class="tag" aria-hidden="true">листайте вбок →</span>
         </div>
         <div class="path__scroller">
-          <ol class="path__track" tabindex="0" aria-label="Наш путь — ключевые этапы по годам">
-            {path.map((p) => (
+          <ol class="path__track" tabindex="0" aria-label="Лента этапов">
+            {['2014', '2016', '2018', '2020', '2022', '2024', 'Сегодня'].map((y) => (
               <li class="path__item">
-                <span class="path__year">{p.y}</span>
-                <p class="path__text">{p.t}</p>
+                <span class="path__year">{y}</span>
+                <p class="path__text">Короткий текст этапа в одну-две строки.</p>
               </li>
             ))}
           </ol>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ 13. Статьи ============ -->
-  <section class="section section--surface" id="articles">
-    <div class="container">
-      <p class="tag reveal">Статьи</p>
-      <h2 data-split>Разбираем то, о чём спрашивают</h2>
-      <p class="lead reveal">
-        Материалы, свет, хранение, уход и мифы вокруг всего этого —
-        по рубрикам.
-      </p>
       <ul class="rubrics reveal-group">
-        {rubrics.map((r, i) => (
-          <li>
-            <span class="tag">0{i + 1}</span>
-            <h3>{r}</h3>
-          </li>
+        {[1, 2, 3, 4, 5, 6].map((n) => (
+          <li><span class="tag">0{n}</span><h3>Рубрика</h3></li>
         ))}
       </ul>
-      <p class="reveal">
-        Отзывы о нас — на независимых площадках:
-        <a class="link-arrow" href="#">Яндекс.Карты →</a>
-      </p>
     </div>
   </section>
 
-  <!-- Фото-пауза перед финалом: во всю ширину экрана -->
-  <figure class="strip">
-    <img src={asset('photos/web/strip2.webp')} alt="Шоурум Skandi Studio" loading="lazy" decoding="async" />
-    <figcaption class="strip__cap">
-      <span>
-        За час встречи мы разбираем планировку, свет, хранение и бюджет.
-        Не спеша, без конвейера — это время только про ваш дом.
-      </span>
-      <span>
-        Вы уйдёте с понятным планом, а не со списком покупок. Будет ясно,
-        что делаем, зачем и в каком порядке.
-      </span>
-    </figcaption>
-  </figure>
-
-  <!-- ============ 14. Запись — тёмный финал ============ -->
-  <section class="section theme-dark" id="booking">
+  <!-- ФОРМА НА ТЁМНОМ -->
+  <section class="section theme-dark" id="form">
     <div class="container split">
       <div>
-        <p class="tag reveal">Заявка</p>
-        <h2 data-split>Обсудить проект</h2>
-        <p class="reveal">
-          Оставьте номер — мы свяжемся с вами, ответим на вопросы
-          и подберём удобное время для встречи в шоуруме.
-        </p>
-        <p class="small reveal" id="contacts">
-          Телефон, почта и адрес шоурума — уточняются. Мессенджеры:
-          <a href="#">Telegram</a>
-        </p>
+        <p class="tag reveal">.form</p>
+        <h2 data-split>Форма</h2>
+        <p class="reveal">Инпуты только с нижней границей, фокус — зелёный. Бэкенда нет, ведёт на /thanks.</p>
       </div>
       <form class="form reveal" action={asset('thanks')} method="get">
-        <label>
-          <span class="tag">Имя</span>
-          <input type="text" name="name" required autocomplete="name" />
-        </label>
-        <label>
-          <span class="tag">Телефон</span>
-          <input type="tel" name="phone" required autocomplete="tel" />
-        </label>
-        <label>
-          <span class="tag">Комментарий (необязательно)</span>
-          <input type="text" name="comment" />
-        </label>
+        <label><span class="tag">Имя</span><input type="text" name="name" required autocomplete="name" /></label>
+        <label><span class="tag">Телефон</span><input type="tel" name="phone" required autocomplete="tel" /></label>
         <label class="form__check">
           <input type="checkbox" required />
           <span class="small">Согласен(на) на обработку персональных данных</span>
@@ -602,490 +276,3 @@ const path = [
 
   <Footer />
 </Layout>
-
-<style>
-  /* ---------- Hero ---------- */
-  /* Подзаголовок «кто мы» — полноценный заголовочный уровень под именем,
-     не микролейбл. Размер держит одну строку на ~1280 CSS-px. */
-  .hero__role {
-    margin-top: 16px;
-    font-size: clamp(19px, 2.2vw, 28px);
-    font-weight: 330;
-    line-height: var(--lh-head);
-    letter-spacing: -0.01em;
-  }
-  .hero__note {
-    margin-top: 10px;
-    color: var(--c-green);
-  }
-  /* Текст прижат к низу кадра — с видео он сидит ниже, чем с портретом */
-  .hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 52%);
-    gap: clamp(20px, 3vw, 56px);
-    align-items: end;
-  }
-  .hero__text { padding-block: var(--section-gap-tight); }
-  .hero__text .tag { margin-bottom: 18px; display: block; }
-  .hero__text .lead { margin-top: var(--block-gap); }
-  .hero__cta { margin-top: var(--block-gap); }
-
-  /* Видео крупное; белый градиент снизу наезжает на кадр,
-     чтобы граница со следующим блоком не была ровной линией */
-  .hero__photo {
-    position: relative;
-    margin: 0;
-    overflow: hidden;
-  }
-  .hero__photo video {
-    width: 100%;
-    height: min(96svh, 900px);
-    object-fit: cover;
-    display: block;
-  }
-  .hero__photo::after {
-    content: '';
-    position: absolute;
-    inset: auto 0 0 0;
-    height: 32%;
-    background: linear-gradient(to top, var(--c-bg) 12%, transparent);
-    pointer-events: none;
-  }
-  @media (max-width: 860px) {
-    .hero__grid { grid-template-columns: 1fr; }
-    .hero__photo video { height: min(70svh, 560px); }
-  }
-
-  /* ---------- С чем приходят ---------- */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(20px, 3vw, 44px) clamp(20px, 3vw, 40px);
-    margin-block: var(--block-gap);
-  }
-  .cards__item + .cards__item { margin-top: 0; }
-  /* Сценарии — смысловой центр секции, читаются крупно, как лид */
-  .cards__item p {
-    font-size: var(--fs-h3);
-    font-weight: 380;
-    line-height: 1.4;
-  }
-  .cards__num {
-    display: block;
-    margin-bottom: 10px;
-  }
-  @media (max-width: 980px) {
-    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 620px) {
-    .cards { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- Две стороны работы: заголовок + контрастный сплит ---------- */
-  .halves-head {
-    padding-block: var(--section-gap) var(--block-gap);
-  }
-  .halves-head h2 { margin-top: 10px; }
-  .halves-head .lead { margin-top: clamp(11px, 1.4vw, 18px); }
-  .halves-split {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .halves-split__col {
-    padding: var(--section-gap) var(--gutter);
-    display: flex;
-    align-items: center;
-    min-height: min(72svh, 700px);
-  }
-  /* «Форма» — светлая половина, «Функция» — шалфейная с футажом */
-  .halves-split__col--light { background: var(--c-surface); }
-  .halves-split__col--sage {
-    position: relative;
-    overflow: hidden;
-    background: var(--c-green-pale);
-  }
-  .halves-split__video {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .halves-split__col--sage::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: rgba(170, 185, 143, 0.6); /* --c-green-pale с прозрачностью */
-  }
-  .halves-split__col--sage .halves-split__inner {
-    position: relative;
-    z-index: 2;
-  }
-  .halves-split__col--sage .tag { color: var(--c-ink); }
-  .halves-split__inner {
-    max-width: 520px;
-    margin-inline: auto;
-  }
-  .halves-split__title {
-    font-size: var(--fs-h1);
-    line-height: var(--lh-tight);
-    margin-block: 18px 22px;
-    max-width: none;
-  }
-  @media (max-width: 860px) {
-    .halves-split { grid-template-columns: 1fr; }
-    .halves-split__col { min-height: 0; }
-  }
-
-  /* ---------- Механизмы (тёмная секция) ---------- */
-  .mechanisms {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(24px, 4vw, 64px);
-    margin-top: var(--block-gap);
-  }
-  .mechanisms__item h3 { margin-bottom: 12px; }
-  .mechanisms__rule { margin-block: var(--block-gap); }
-  @media (max-width: 760px) {
-    .mechanisms { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- Спек-лист (реф: numbers-list с hairline) ---------- */
-  .spec { margin-top: var(--block-gap); }
-  .spec__row {
-    display: grid;
-    grid-template-columns: 60px minmax(0, 30%) minmax(0, 1fr);
-    gap: 16px clamp(16px, 3vw, 48px);
-    align-items: start;
-    padding-block: clamp(18px, 2.5vw, 28px);
-    border-bottom: 1px solid var(--c-line);
-  }
-  .spec__row:first-child { border-top: 1px solid var(--c-line); }
-  .spec__sub { display: block; margin-top: var(--block-gap); margin-bottom: 8px; }
-  @media (max-width: 760px) {
-    .spec__row { grid-template-columns: 48px minmax(0, 1fr); }
-    .spec__row p { grid-column: 2; }
-  }
-
-  /* Три равные колонки */
-  .triple {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(20px, 3vw, 48px);
-    margin-top: 12px;
-  }
-  .triple h3 { margin-bottom: 10px; }
-  @media (max-width: 760px) {
-    .triple { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- Карточки-паспорта (реф: карточка нутриента N/P/K) ---------- */
-  .passport {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(12px, 1.5vw, 20px);
-    margin-top: var(--block-gap);
-  }
-  .passport__card {
-    background: var(--c-bg);
-    padding: clamp(16px, 2vw, 26px);
-    min-height: clamp(160px, 18vw, 230px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  /* На белой секции карточкам нужен серый, на серой — белый (по умолчанию) */
-  .section:not(.section--surface) .passport__card { background: var(--c-surface); }
-  .passport__card h3 { max-width: 14ch; }
-  .passport__body { margin-top: clamp(28px, 4vw, 56px); }
-  .passport__desc {
-    margin-top: 10px;
-    font-size: var(--fs-small);
-    line-height: 1.45;
-    max-width: 30ch;
-  }
-  @media (max-width: 900px) {
-    .passport { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-
-  /* Бенто каталога: три обычные плашки в ряд, четвёртая — широкая,
-     на шалфейной подложке и с футажом. */
-  .passport--bento { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .passport__card--feature {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
-    padding: 0;
-    min-height: clamp(260px, 30vw, 400px);
-  }
-  /* специфичность выше правила .section:not(...) .passport__card */
-  .section .passport__card--feature {
-    background: var(--c-green-pale);
-  }
-  .passport__feature-text {
-    padding: clamp(16px, 2vw, 26px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  .passport__video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  @media (max-width: 900px) {
-    .passport--bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .passport__card--feature { grid-template-columns: 1fr; min-height: 0; }
-    .passport__video { aspect-ratio: 16 / 10; height: auto; }
-  }
-
-  .quit {
-    margin-top: var(--block-gap);
-    max-width: var(--measure-lead);
-  }
-  .quit h3 { margin-bottom: 10px; }
-
-  /* ---------- Сплит текст + фото ---------- */
-  .split {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 44%);
-    gap: clamp(24px, 4vw, 72px);
-    align-items: center;
-  }
-  .split--reverse { grid-template-columns: minmax(0, 44%) minmax(0, 1fr); }
-  .split h2 { margin-bottom: var(--block-gap); }
-  .split__photo { margin: 0; }
-  .split__photo img {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    object-position: center 20%;
-  }
-  @media (max-width: 860px) {
-    .split, .split--reverse { grid-template-columns: 1fr; }
-    .split--reverse .split__photo { order: 2; }
-  }
-
-  /* ---------- Зоны и простые списки ---------- */
-  .zones, .list-plain { margin-top: var(--block-gap); }
-  .zones li, .list-plain li {
-    padding-block: 12px;
-  }
-  .list-plain { margin-top: var(--block-gap); }
-
-  .socials {
-    margin-top: var(--block-gap);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px 48px;
-    align-items: baseline;
-    justify-content: space-between;
-  }
-  .socials p { max-width: var(--measure-lead); }
-  .socials__links { display: flex; gap: 28px; color: var(--c-green); }
-
-  /* ---------- О студии: «Наш путь» — горизонтальный таймлайн ----------
-     Лента листается вбок и «уходит» за линейный градиент у правого края. */
-  .path { margin-top: var(--block-gap); }
-  .path__head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 18px;
-  }
-  .path__scroller { position: relative; }
-  .path__scroller::after {
-    content: '';
-    position: absolute;
-    inset: 0 0 0 auto;
-    width: clamp(70px, 12vw, 180px);
-    background: linear-gradient(to left, var(--c-bg) 10%, transparent);
-    pointer-events: none;
-  }
-  .path__track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: clamp(210px, 24vw, 290px);
-    overflow-x: auto;
-    cursor: grab;
-    scrollbar-width: none;
-  }
-  .path__track::-webkit-scrollbar { display: none; }
-  .path__track.is-drag { cursor: grabbing; user-select: none; }
-  /* ось таймлайна — непрерывная структурная линия сверху */
-  .path__item {
-    border-top: 1px solid var(--c-line);
-    padding: 16px clamp(24px, 3vw, 48px) 6px 0;
-  }
-  .path__track .path__item + .path__item { margin-top: 0; }
-  /* запас справа, чтобы последний этап не жил под градиентом */
-  .path__item:last-child { padding-right: clamp(70px, 12vw, 180px); }
-  .path__year {
-    display: block;
-    font-size: clamp(26px, 2.6vw, 34px);
-    font-weight: 330;
-    line-height: 1.1;
-    color: var(--c-green);
-    margin-bottom: 10px;
-  }
-  .path__text { font-size: var(--fs-small); }
-
-  /* ---------- Рубрики статей ---------- */
-  .rubrics {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(16px, 2vw, 32px);
-    margin-block: var(--block-gap);
-  }
-  .rubrics li + li { margin-top: 0; }
-  .rubrics .tag { display: block; margin-bottom: 8px; }
-  @media (max-width: 760px) {
-    .rubrics { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- Форма (реф: инпуты только с нижней границей) ---------- */
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-  .form label { display: block; }
-  .form .tag { display: block; margin-bottom: 6px; }
-  .form input[type='text'],
-  .form input[type='tel'] {
-    width: 100%;
-    border: 0;
-    border-bottom: 1px solid var(--c-line);
-    background: transparent;
-    padding: 6px 2px 10px;
-    font-size: var(--fs-body);
-    color: var(--c-ink);
-  }
-  .form input:focus {
-    outline: none;
-    border-bottom-color: var(--c-green);
-  }
-  .form__check {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .form__check input {
-    margin-top: 4px;
-    accent-color: var(--c-green-deep);
-  }
-  .form .btn { align-self: flex-start; }
-
-  /* Форма на тёмном финале */
-  .theme-dark .form input[type='text'],
-  .theme-dark .form input[type='tel'] {
-    color: var(--c-white);
-    border-bottom-color: rgba(255, 255, 255, 0.35);
-  }
-  .theme-dark .form input:focus { border-bottom-color: var(--c-green-pale); }
-  .theme-dark .form__check input { accent-color: var(--c-green-pale); }
-  .theme-dark .link-arrow { color: var(--c-green-pale); }
-
-  /* ---------- Фото-пауза: во всю ширину, кадр целиком, без кропа ---------- */
-  .strip {
-    position: relative;
-    margin: 0;
-    width: 100%;
-  }
-  .strip img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  /* Крупные фразы по бокам на линейном градиенте снизу */
-  .strip__cap {
-    position: absolute;
-    inset: auto 0 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: clamp(24px, 6vw, 120px);
-    padding: 160px var(--gutter) 28px;
-    color: var(--c-white);
-    font-size: clamp(18px, 1.9vw, 25px);
-    font-weight: 380;
-    line-height: 1.35;
-    background: linear-gradient(to top, rgba(17, 19, 17, 0.72), rgba(17, 19, 17, 0.25) 55%, transparent);
-  }
-  .strip__cap span { max-width: 30ch; }
-  @media (max-width: 700px) {
-    .strip__cap { flex-direction: column; align-items: flex-start; gap: 14px; padding-top: 60px; }
-  }
-
-  /* ---------- Пресса: editorial-строки ---------- */
-  .pressrows { margin-top: var(--block-gap); }
-  .pressrows__row {
-    display: grid;
-    grid-template-columns: clamp(90px, 12vw, 160px) minmax(0, 1fr) auto;
-    gap: 12px clamp(16px, 3vw, 40px);
-    align-items: baseline;
-    padding-block: clamp(14px, 2vw, 20px);
-    border-bottom: 1px solid var(--c-line);
-  }
-  .pressrows__row:first-child { border-top: 1px solid var(--c-line); }
-  .pressrows__row h3 {
-    transition: transform 0.3s var(--ease-out);
-    max-width: none;
-  }
-  .pressrows__row:hover h3 { transform: translateX(10px); }
-  .pressrows__arrow { color: var(--c-green); }
-  @media (max-width: 700px) {
-    .pressrows__row { grid-template-columns: minmax(0, 1fr) auto; }
-    .pressrows__row .tag { grid-column: 1 / -1; }
-  }
-
-  /* ---------- Манифест на тёмном ---------- */
-  .manifesto {
-    font-size: clamp(36px, 5.5vw, 84px);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: -0.015em;
-    max-width: 18ch;
-    margin-block: 18px var(--block-gap);
-  }
-  .manifesto__cols {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(20px, 3vw, 56px);
-    margin-bottom: var(--block-gap);
-  }
-  @media (max-width: 760px) {
-    .manifesto__cols { grid-template-columns: 1fr; }
-  }
-</style>
-
-<script>
-  // «Наш путь»: перетаскивание ленты мышью (тачпад и тач скроллят нативно)
-  const track = document.querySelector<HTMLElement>('.path__track');
-  if (track) {
-    let startX = 0;
-    let startLeft = 0;
-    let dragging = false;
-    track.addEventListener('pointerdown', (e) => {
-      dragging = true;
-      startX = e.clientX;
-      startLeft = track.scrollLeft;
-      track.classList.add('is-drag');
-      track.setPointerCapture(e.pointerId);
-    });
-    track.addEventListener('pointermove', (e) => {
-      if (dragging) track.scrollLeft = startLeft - (e.clientX - startX);
-    });
-    const stopDrag = () => {
-      dragging = false;
-      track.classList.remove('is-drag');
-    };
-    track.addEventListener('pointerup', stopDrag);
-    track.addEventListener('pointercancel', stopDrag);
-  }
-</script>
