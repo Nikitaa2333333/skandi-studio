@@ -34,3 +34,5 @@ pnpm-debug.log*
 
 # Root temporary video files
 /*.mp4
+
+package-lock.json
